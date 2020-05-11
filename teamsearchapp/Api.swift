@@ -25,10 +25,6 @@ struct ItemModel : Codable {
     }
 }
 
-struct ItemDetailsResponse : Codable {
-    let body: ItemDetails
-}
-
 struct ItemDetails : Codable {
     let title: String
     let id: String
@@ -36,6 +32,10 @@ struct ItemDetails : Codable {
     let currency_id: String
     let pictures: [PictureDetails]
     let geolocation: Geolocation?
+}
+
+struct ItemDescription : Codable {
+    let plain_text: String
 }
 
 struct Geolocation : Codable {
@@ -66,15 +66,32 @@ func searchItems(searchText : String, site : String, callback : @escaping([ItemM
 }
 
 func fetchItemDetails(itemId : String, callback : @escaping(ItemDetails) -> ()) -> Void {
-    AF.request("https://api.mercadolibre.com/items?ids=\(itemId)", method: .get)
+    AF.request("https://api.mercadolibre.com/items/\(itemId)", method: .get)
     .validate(statusCode: 200..<300)
     .validate(contentType: ["application/json"])
         .responseJSON() { response in
             print(response)
     }
-    .responseDecodable(of: [ItemDetailsResponse].self) { response in
+    .responseDecodable(of: ItemDetails.self) { response in
         if case .success(let searchResults) = response.result {
-            callback(searchResults[0].body)
+            callback(searchResults)
+        }
+        else {
+            print(response)
+        }
+    }
+}
+
+func fetchItemDescription(itemId : String, callback : @escaping(ItemDescription) -> ()) -> Void {
+    AF.request("https://api.mercadolibre.com/items/\(itemId)/description", method: .get)
+    .validate(statusCode: 200..<300)
+    .validate(contentType: ["application/json"])
+        .responseJSON() { response in
+            print(response)
+    }
+    .responseDecodable(of: ItemDescription.self) { response in
+        if case .success(let descriptionResult) = response.result {
+            callback(descriptionResult)
         }
         else {
             print(response)

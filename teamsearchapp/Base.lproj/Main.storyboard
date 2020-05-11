@@ -6,6 +6,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="TimesNewRoman.ttf">
+            <string>.SFUI-Semibold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
@@ -263,8 +268,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="nombre" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9C-bF-3d3">
-                                <rect key="frame" x="20" y="334" width="374" height="69"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="nombre" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9C-bF-3d3">
+                                <rect key="frame" x="20" y="334" width="374" height="38"/>
+                                <fontDescription key="fontDescription" name=".SFUI-Semibold" family=".AppleSystemUIFont" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="precio" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDs-Tw-B2a">
+                                <rect key="frame" x="346" y="380" width="48" height="37"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -274,8 +285,8 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="z5m-iQ-Oex"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="ES9-pL-Ede"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="precio" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDs-Tw-B2a">
-                                <rect key="frame" x="346" y="411" width="48" height="37"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="description" lineBreakMode="wordWrap" numberOfLines="50" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uK3-W2-L7F">
+                                <rect key="frame" x="20" y="432" width="374" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -283,12 +294,15 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="uK3-W2-L7F" firstAttribute="top" secondItem="KDs-Tw-B2a" secondAttribute="bottom" constant="9" id="0gZ-66-BCM"/>
                             <constraint firstItem="KDs-Tw-B2a" firstAttribute="top" secondItem="M9C-bF-3d3" secondAttribute="bottom" constant="8" id="6Lm-g5-9R4"/>
                             <constraint firstItem="c8E-QN-obX" firstAttribute="trailing" secondItem="KDs-Tw-B2a" secondAttribute="trailing" constant="20" id="7X8-nZ-AH3"/>
                             <constraint firstItem="M9C-bF-3d3" firstAttribute="top" secondItem="iBt-dw-qrh" secondAttribute="bottom" constant="8" id="Hxw-yp-hdr"/>
                             <constraint firstItem="M9C-bF-3d3" firstAttribute="leading" secondItem="c8E-QN-obX" secondAttribute="leading" constant="20" id="Iac-bw-M6L"/>
                             <constraint firstItem="c8E-QN-obX" firstAttribute="trailing" secondItem="M9C-bF-3d3" secondAttribute="trailing" constant="20" id="LdW-DN-zq6"/>
                             <constraint firstItem="iBt-dw-qrh" firstAttribute="trailing" secondItem="c8E-QN-obX" secondAttribute="trailing" id="XgX-BI-PBh"/>
+                            <constraint firstItem="uK3-W2-L7F" firstAttribute="leading" secondItem="c8E-QN-obX" secondAttribute="leading" constant="20" id="YOY-Ze-ku8"/>
+                            <constraint firstItem="c8E-QN-obX" firstAttribute="trailing" secondItem="uK3-W2-L7F" secondAttribute="trailing" constant="20" id="cad-xG-59v"/>
                             <constraint firstItem="iBt-dw-qrh" firstAttribute="leading" secondItem="c8E-QN-obX" secondAttribute="leading" id="dZZ-PI-VZI"/>
                             <constraint firstItem="iBt-dw-qrh" firstAttribute="top" secondItem="c8E-QN-obX" secondAttribute="top" id="kij-2M-0Gt"/>
                         </constraints>
@@ -297,13 +311,14 @@
                     <navigationItem key="navigationItem" id="qBf-7Q-zMV"/>
                     <connections>
                         <outlet property="carrouselImages" destination="iBt-dw-qrh" id="fxL-98-kR3"/>
+                        <outlet property="lblDescription" destination="uK3-W2-L7F" id="ro5-h5-xsF"/>
                         <outlet property="lblName" destination="M9C-bF-3d3" id="OF9-yp-Y6c"/>
                         <outlet property="lblPrice" destination="KDs-Tw-B2a" id="14h-OR-o9p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfE-Sx-qHF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3567" y="-147"/>
+            <point key="canvasLocation" x="3566.666666666667" y="-147.32142857142856"/>
         </scene>
     </scenes>
     <resources>

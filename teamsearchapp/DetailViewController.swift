@@ -13,6 +13,7 @@ import Auk
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var carrouselImages: UIScrollView!
@@ -34,6 +35,10 @@ class DetailViewController: UIViewController {
                 response.pictures.forEach() { picture in
                     self.carrouselImages.auk.show(url: picture.secure_url)
                 }
+            }
+            
+            fetchItemDescription(itemId: uItem.id) { response in
+                self.lblDescription.text = response.plain_text
             }
         }
     }
