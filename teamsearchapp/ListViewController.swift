@@ -7,28 +7,7 @@
 //
 
 import UIKit
-import Alamofire
 import AlamofireImage
-
-struct ItemModel : Codable {
-    let name: String
-    let price: Double
-    let id: String
-    let thumbnail: String
-    let currency : String
-    
-    enum CodingKeys: String, CodingKey {
-        case name = "title"
-        case price
-        case id
-        case thumbnail
-        case currency = "currency_id"
-    }
-}
-
-struct SearchResultModel : Codable {
-    let results: [ItemModel]?
-}
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -42,29 +21,15 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         super.viewDidLoad()
 
-        AF.request("https://api.mercadolibre.com/sites/\(site!)/search?q=\(searchText!)", method: .get)
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
-            .responseDecodable(of: SearchResultModel.self) { response in
-                if let searchResults = response.value?.results {
-                    self.items = searchResults
-                    self.tableView.reloadData()
-                }
+        searchItems(searchText: searchText!, site: site!) { searchResults in
+            self.items = searchResults
+            self.tableView.reloadData()
         }
         
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        
-        guard let selected = selectedRow, let detailVC = segue.destination as? DetailViewController else {
-            return
-        }
-        detailVC.item = items[selected]
-    }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
@@ -82,16 +47,23 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.lblName.text = item.name
         cell.lblPrice.text = "\(item.currency) \(item.price)"
         
-        AF.request(item.thumbnail, method: .get)
-            .responseImage{ response in
-                if case .success(let image) = response.result {
-                    cell.imgItem.image = image
-                }
-            }
+        fetchImage(url: item.thumbnail) { response in
+            cell.imgItem.image = response
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedRow = indexPath.row
         self.performSegue(withIdentifier: "detalle", sender: self)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        guard let selected = selectedRow, let detailVC = segue.destination as? DetailViewController else {
+            return
+        }
+        detailVC.item = items[selected]
+    }
+    
 }

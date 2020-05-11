@@ -2,20 +2,29 @@ PODS:
   - Alamofire (5.1.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
+  - Auk (11.0.0):
+    - moa
+  - moa (12.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.1)
   - AlamofireImage (~> 4.1)
+  - Auk (~> 11.0)
+  - moa (~> 12.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
+    - Auk
+    - moa
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
+  Auk: 7cc533252e2caaaa36b2be19c0b799f6057c365a
+  moa: e2346f12de6c65bbca4d103950d45db9e46785ef
 
-PODFILE CHECKSUM: 704ed4974fb63c6d95c000c34dd237922e7d55a4
+PODFILE CHECKSUM: a769a0b3b01bb8fc117190063ab5422a7884c976
 
 COCOAPODS: 1.9.1

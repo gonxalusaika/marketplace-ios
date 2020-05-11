@@ -8,6 +8,8 @@ target 'teamsearchapp' do
   # Pods for teamsearchapp
   pod 'Alamofire', '~> 5.1'
   pod 'AlamofireImage', '~> 4.1'
+  pod 'moa', '~> 12.0'
+  pod 'Auk', '~> 11.0'
 
   target 'teamsearchappTests' do
     inherit! :search_paths

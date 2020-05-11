@@ -9,7 +9,7 @@
 import UIKit
 
 class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-    let sites = ["MLA", "MLB", "MLU", "MLC"]
+    let sites = ["MLU", "MLA", "MLB", "MLC"]
     
     @IBOutlet weak var sitePicker: UITextField!
     @IBOutlet weak var searchTextField: UITextField!
@@ -36,6 +36,7 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         let pickerView = UIPickerView()
         pickerView.delegate = self
         sitePicker.inputView = pickerView
+        sitePicker.text = sites[0]
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -44,6 +45,7 @@ class SearchViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         }
         listView.searchText = searchTextField.text
         listView.site = sitePicker.text
+        saveToHistory(term: searchTextField.text!, site: sitePicker.text!)
     }
     
 

@@ -9,25 +9,30 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import Auk
 
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblPrice: UILabel!
-    @IBOutlet weak var imgItemImage: UIImageView!
+    @IBOutlet weak var carrouselImages: UIScrollView!
     var item : ItemModel?
+    var detailedItem : ItemDetails?
+    var imageIndex: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let uItem = item {
-            lblName.text = uItem.name
-            lblPrice.text = "\(uItem.currency) \(uItem.price)"
             
-            AF.request(uItem.thumbnail, method: .get)
-            .responseImage{ response in
-                if case .success(let image) = response.result {
-                    self.imgItemImage.image = image
+            fetchItemDetails(itemId: uItem.id) { response in
+                self.detailedItem = response
+                
+                self.lblName.text = response.title
+                self.lblPrice.text = "\(response.currency_id) \(response.price)"
+                
+                response.pictures.forEach() { picture in
+                    self.carrouselImages.auk.show(url: picture.secure_url)
                 }
             }
         }
